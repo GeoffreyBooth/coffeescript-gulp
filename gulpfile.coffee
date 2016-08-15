@@ -3,7 +3,7 @@ exec = require('child_process').exec
 
 build = (done) ->
 	console.log 'Recompiling...'
-	exec "cd #{__dirname}/../coffeescript/ && git checkout lib/* && cake build && cake build:parser && cake test", (err, stdout, stderr) ->
+	exec "clear; printf '\\033[3J'; cd #{__dirname}/../coffeescript/ && git checkout lib/* && cake build && cake build:parser && cake test", (err, stdout, stderr) ->
 		console.log stdout
 		console.error stderr
 		done err
