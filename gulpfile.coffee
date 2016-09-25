@@ -1,16 +1,17 @@
 gulp = require 'gulp'
 exec = require('child_process').exec
 
-build = (done) ->
-	console.log 'Recompiling...'
-	exec "clear; printf '\\033[3J'; cd #{__dirname}/../coffeescript/ && git checkout lib/* && cake build && cake build:parser && cake test", (err, stdout, stderr) ->
+build = (done, includingParser = no) ->
+	console.log "Recompiling#{if includingParser then ', including the parser' else ''}..."
+	exec "clear; printf '\\033[3J'; cd #{__dirname}/../coffeescript/ && git checkout lib/* && cake build #{if includingParser then '&& cake build:parser' else ''} && cake test", (err, stdout, stderr) ->
 		console.log stdout
 		console.error stderr
 		done err
 
 watch = ->
 	console.log 'Watching for changes...'
-	gulp.watch ['src/*', 'test/*'], build
+	gulp.watch ['src/*', 'test/*', '!src/grammar.coffee'], build
+	gulp.watch ['src/grammar.coffee'], (done) -> build done, yes
 
 gulp.task 'build', build
 gulp.task 'watch', watch
