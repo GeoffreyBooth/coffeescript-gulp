@@ -10,7 +10,7 @@ build = (done, includingParser = no) ->
 
 watch = ->
 	console.log 'Watching for changes...'
-	gulp.watch ['src/*', 'test/*', '!src/grammar.coffee'], build
+	gulp.watch ['Cakefile', 'src/*', 'test/*', '!src/grammar.coffee'], build
 	gulp.watch ['src/grammar.coffee'], (done) -> build done, yes
 
 gulp.task 'build', build
