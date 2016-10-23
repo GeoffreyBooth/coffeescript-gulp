@@ -31,6 +31,7 @@ Next, within the `coffeescript-gulp` repo, create symlinks to the CoffeeScript r
 
 ```sh
 cd ~/Sites/coffeescript-gulp
+ln -s ../coffeescript/Cakefile Cakefile
 ln -s ../coffeescript/src src
 ln -s ../coffeescript/test test
 ```
