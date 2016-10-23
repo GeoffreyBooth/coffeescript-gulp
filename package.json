@@ -6,7 +6,8 @@
   "dependencies": {},
   "devDependencies": {
     "coffee-script": "^1.11.0",
-    "gulp": "github:gulpjs/gulp#4.0"
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-util": "^3.0.7"
   },
   "scripts": {
     "start": "gulp watch",

@@ -43,4 +43,4 @@ cd ~/Sites/coffeescript-gulp
 gulp
 ```
 
-It will start and enter watch mode. Save any file in `../coffeescript/src` or `../coffeescript/test` to recompile the CoffeeScript compiler and run the tests.
+It will start and enter watch mode. Save any file in `../coffeescript/src` or `../coffeescript/test`, or `Cakefile`, to recompile the CoffeeScript compiler and run the tests. To run the tests in `node --harmony` mode, start via `gulp --test-harmony`.
