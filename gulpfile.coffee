@@ -1,13 +1,13 @@
 gulp = require 'gulp'
 util = require 'gulp-util'
-exec = require('child_process').exec
+execSync = require('child_process').execSync
 
 build = (done, includingParser = no) ->
-	console.log "Recompiling#{if includingParser then ', including the parser' else ''}..."
-	exec "clear; printf '\\033[3J'; cd #{__dirname}/../coffeescript/ && git checkout lib/* && cake build #{if includingParser then '&& cake build:parser' else ''} && npm run #{if util.env['test-harmony'] then 'test-harmony' else 'test'}", (err, stdout, stderr) ->
-		console.log stdout
-		console.error stderr
-		done err
+	try
+		execSync "clear; printf '\\033[3J'; echo 'Recompiling#{if includingParser then ', including the parser' else ''}...'; cd #{__dirname}/../coffeescript/ && git checkout lib/* && cake build#{unless includingParser then ':except-parser' else ''} && echo 'Testing...' && node #{if util.env['test-harmony'] then '--harmony ' else ''} ./bin/cake test", stdio: [process.stdin, process.stdout, 'ignore'] # Ignore stderr, as it’s just Node warning of a nonzero exit code on test fail
+		done()
+	catch exception
+		done()
 
 watch = ->
 	console.log 'Watching for changes...'

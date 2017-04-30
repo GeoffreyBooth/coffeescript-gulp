@@ -1,11 +1,11 @@
 {
   "name": "coffeescript-gulp",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "gulpfile.coffee",
   "dependencies": {},
   "devDependencies": {
-    "coffee-script": "^1.11.0",
+    "coffeescript": "^1.12.5",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-util": "^3.0.7"
   },

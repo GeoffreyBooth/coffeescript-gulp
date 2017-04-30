@@ -8,7 +8,7 @@ Watch the CoffeeScript repository’s source files for changes, then recompile a
 # Install Gulp 4 globally
 npm install -g gulpjs/gulp.git#4.0
 # Install CoffeeScript globally
-npm install -g coffee-script
+npm install -g coffeescript
 ```
 
 ## Setup
