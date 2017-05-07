@@ -5,7 +5,10 @@ execSync = require('child_process').execSync
 execSyncOptions =
 	cwd: "#{__dirname}/../coffeescript/"
 
-build = (includingParser = no) ->
+testExecSyncOptions = Object.assign execSyncOptions, stdio: [process.stdin, process.stdout, 'ignore'] # Ignore stderr, as it’s just Node warning of a nonzero exit code on test fail
+
+
+buildAndTest = (done, includingParser = no) ->
 	try
 		execSync "clear; printf '\\033[3J'", Object.assign execSyncOptions, stdio: 'inherit'
 		console.log "Recompiling#{if includingParser then ', including the parser' else ''}..."
@@ -32,25 +35,18 @@ build = (includingParser = no) ->
 				lib/coffeescript/sourcemap.js''', execSyncOptions
 			execSync 'cake build:except-parser', execSyncOptions
 
-		setTimeout ->
-			execSync 'cake build:browser', execSyncOptions
-		, 10
+		console.log 'Testing...'
+		execSync "node #{if util.env['test-harmony'] then '--harmony ' else ''}./bin/cake test", testExecSyncOptions
+	catch exception
+	finally
+		done()
 
-test = ->
-	console.log 'Testing...'
-	testExecSyncOptions = Object.assign execSyncOptions, stdio: [process.stdin, process.stdout, 'ignore'] # Ignore stderr, as it’s just Node warning of a nonzero exit code on test fail
-	try
-		execSync "node #{if util.env['test-harmony'] then '--harmony ' else ''} ./bin/cake test", testExecSyncOptions
-
-buildAndTest = (done, includingParser = no) ->
-	build includingParser
-	test()
-	done()
 
 watch = ->
 	console.log 'Watching for changes...'
 	gulp.watch ['Cakefile', 'src/*', 'test/*', '!src/grammar.coffee'], buildAndTest
 	gulp.watch ['src/grammar.coffee'], (done) -> buildAndTest done, yes
+
 
 gulp.task 'build', buildAndTest
 gulp.task 'watch', watch
