@@ -5,9 +5,9 @@
   "main": "gulpfile.coffee",
   "dependencies": {},
   "devDependencies": {
-    "coffeescript": "^1.12.5",
+    "coffeescript": "^1.12.7",
     "gulp": "github:gulpjs/gulp#4.0",
-    "gulp-util": "^3.0.7"
+    "gulp-util": "^3.0.8"
   },
   "scripts": {
     "start": "gulp watch",
