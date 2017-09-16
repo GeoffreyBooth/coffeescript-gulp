@@ -4,13 +4,11 @@ execSync = require('child_process').execSync
 
 execSyncOptions =
 	cwd: "#{__dirname}/../coffeescript/"
-
-testExecSyncOptions = Object.assign execSyncOptions, stdio: [process.stdin, process.stdout, 'ignore'] # Ignore stderr, as it’s just Node warning of a nonzero exit code on test fail
-
+	stdio: [process.stdin, process.stdout, process.stdin]
 
 buildAndTest = (done, includingParser = no) ->
 	try
-		execSync "clear; printf '\\033[3J'", Object.assign execSyncOptions, stdio: 'inherit'
+		execSync "clear; printf '\\033[3J'", execSyncOptions
 		console.log "Recompiling#{if includingParser then ', including the parser' else ''}..."
 		if includingParser
 			execSync 'git checkout lib/*', execSyncOptions
@@ -36,7 +34,9 @@ buildAndTest = (done, includingParser = no) ->
 			execSync 'cake build:except-parser', execSyncOptions
 
 		console.log 'Testing...'
-		execSync "node #{if util.env['test-harmony'] then '--harmony ' else ''}./bin/cake test", testExecSyncOptions
+		execSync "node #{if util.env['test-harmony'] then '--harmony ' else ''}./bin/cake test",
+			cwd: "#{__dirname}/../coffeescript/"
+			stdio: [process.stdin, process.stdout, 'ignore'] # Ignore stderr, as it’s just Node warning of a nonzero exit code on test fail
 	catch exception
 	finally
 		done()
