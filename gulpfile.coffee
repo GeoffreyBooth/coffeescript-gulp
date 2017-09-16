@@ -33,18 +33,29 @@ buildAndTest = (done, includingParser = no) ->
 				lib/coffeescript/sourcemap.js''', execSyncOptions
 			execSync 'cake build:except-parser', execSyncOptions
 
-		console.log 'Testing...'
-		execSync "node #{if util.env['test-harmony'] then '--harmony ' else ''}./bin/cake test",
-			cwd: "#{__dirname}/../coffeescript/"
-			stdio: [process.stdin, process.stdout, 'ignore'] # Ignore stderr, as it’s just Node warning of a nonzero exit code on test fail
-	catch exception
+		test()
+	catch
 	finally
 		done()
 
+clearAndTest = (done) ->
+	execSync "clear; printf '\\033[3J'", Object.assign execSyncOptions, stdio: 'inherit'
+	test done
+
+test = (done) ->
+	console.log 'Testing...'
+	try
+		execSync "node #{if util.env['test-harmony'] then '--harmony ' else ''}./bin/cake test",
+			cwd: "#{__dirname}/../coffeescript/"
+			stdio: [process.stdin, process.stdout, 'ignore'] # Ignore stderr, as it’s just Node warning of a nonzero exit code on test fail
+	catch
+	finally
+		done()
 
 watch = ->
 	console.log 'Watching for changes...'
-	gulp.watch ['Cakefile', 'src/*', 'test/*', '!src/grammar.coffee'], buildAndTest
+	gulp.watch ['Cakefile', 'src/*', '!src/grammar.coffee'], buildAndTest
+	gulp.watch ['test/*'], clearAndTest
 	gulp.watch ['src/grammar.coffee'], (done) -> buildAndTest done, yes
 
 
