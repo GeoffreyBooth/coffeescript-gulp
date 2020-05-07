@@ -4,11 +4,11 @@ Watch the CoffeeScript repository’s source files for changes, then recompile a
 
 ## Prerequisites
 
+It is assumed the `git` command is available globally. You also need the `cake` command available globally, so install CoffeeScript (the official published version) globally if you haven’t already done so:
+
 ```sh
-# Install Gulp 4 globally
-npm install -g gulpjs/gulp.git#4.0
 # Install CoffeeScript globally
-npm install -g coffeescript
+npm install --global coffeescript
 ```
 
 ## Setup
@@ -23,7 +23,7 @@ So something like:
 ```sh
 mkdir -p ~/Sites
 cd ~/Sites
-git clone git@github.com:GeoffreyBooth/coffeescript.git
+git clone git@github.com:jashkenas/coffeescript.git
 git clone git@github.com:GeoffreyBooth/coffeescript-gulp.git
 ```
 
@@ -40,7 +40,7 @@ ln -s ../coffeescript/test test
 
 ```sh
 cd ~/Sites/coffeescript-gulp
-gulp
+npx gulp
 ```
 
 It will start and enter watch mode. Save any file in `../coffeescript/src` or `../coffeescript/test`, or `Cakefile`, to recompile the CoffeeScript compiler and run the tests. To run the tests in `node --harmony` mode, start via `gulp --test-harmony`.
