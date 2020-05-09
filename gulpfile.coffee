@@ -9,6 +9,7 @@ execSyncOptions =
 buildAndTest = (done, includingParser = no) ->
 	try
 		execSync "clear; printf '\\033[3J'", execSyncOptions
+		execSync 'sync', execSyncOptions
 		console.log "Recompiling#{if includingParser then ', including the parser' else ''}..."
 		if includingParser
 			execSync 'git checkout lib/*', execSyncOptions
