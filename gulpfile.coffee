@@ -14,23 +14,10 @@ buildAndTest = (done, includingParser = no) ->
 			execSync 'git checkout lib/*', execSyncOptions
 			execSync 'cake build', execSyncOptions
 		else
-			# Don’t reset lib/coffeescript/parser.js
-			execSync '''git checkout \
-				lib/coffeescript/browser.js \
-				lib/coffeescript/cake.js \
-				lib/coffeescript/coffeescript.js \
-				lib/coffeescript/command.js \
-				lib/coffeescript/grammar.js \
-				lib/coffeescript/helpers.js \
-				lib/coffeescript/index.js \
-				lib/coffeescript/lexer.js \
-				lib/coffeescript/nodes.js \
-				lib/coffeescript/optparse.js \
-				lib/coffeescript/register.js \
-				lib/coffeescript/repl.js \
-				lib/coffeescript/rewriter.js \
-				lib/coffeescript/scope.js \
-				lib/coffeescript/sourcemap.js''', execSyncOptions
+			execSync '''
+			  ls -1 lib/coffeescript/*.js |
+			  grep -v parser.js           | # Don’t reset parser.js
+			  xargs git checkout''', execSyncOptions
 			execSync 'cake build:except-parser', execSyncOptions
 
 		test()
