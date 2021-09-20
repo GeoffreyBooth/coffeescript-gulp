@@ -5,7 +5,7 @@
   "repository": "https://github.com/geoffreybooth/coffeescript-gulp",
   "main": "gulpfile.coffee",
   "dependencies": {
-    "coffeescript": "^2.5.1",
+    "coffeescript": "^2.6.0",
     "gulp": "^4.0.2",
     "gulp-util": "^3.0.8"
   },
